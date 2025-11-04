@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flight Dashboard</title>
+    <link rel="stylesheet" href="estilos.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="svgWave">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path
+          fill="#0099ff"
+          fill-opacity="2"
+          d="M0,96L80,122.7C160,149,320,203,480,213.3C640,224,800,192,960,154.7C1120,117,1280,75,1360,53.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+        ></path>
+      </svg>
+    </div>
+    <main class="principal">
+      <!-- Barra lateral -->
+      <div class="barra-lateral">
+        <div class="perfil">
+          <img src="img/avatar-p.png" alt="User Avatar" class="avatar" />
+          <h2 id="titulo2" class="username">Alex Johnson</h2>
+          <span class="email">alex.johnson@gmail.com</span>
+        </div>
+
+        <nav class="menu">
+          <div class="opcion">
+            <img src="img/icon-dashb.png" id="icon" alt="Img-Dashboard">
+            <a href="#" class="menu-item">Dashboard</a>
+          </div>
+          <div class="opcion">
+            <img src="img/icon-fly.png" id="icon" alt="Img-AirFly">
+            <a href="#" class="menu-item">Flights</a>
+          </div>
+          <div class="opcion" id="id-item">
+            <img src="img/icon-wallet.png" id="icon" alt="Img-Wallet">
+            <a href="#" class="menu-item" id="id-item">Wallet</a>
+          </div>
+          <div class="opcion" id="id-item">
+            <img src="img/icon-report.png" id="icon" alt="Img-Reporte">
+            <a href="#" class="menu-item" id="id-item">Reports</a>
+          </div>
+          <div class="opcion" id="id-item">
+            <img src="img/icon-statistic.png" id="icon" alt="Img-Estadistica">
+            <a href="#" class="menu-item" id="id-item">Statistics</a>
+          </div>
+          <div class="opcion" id="id-item">
+            <img src="img/icon-setting.png" id="icon" alt="Img-Settings">
+            <a href="#" class="menu-item" id="id-item">Settings</a>
+          </div>
+          <div class="opcion-2">
+            <span>Active User</span>
+            <img src="img/icon-user2.png" id="icon-op" alt="Active User" />
+            <img src="img/icon-map.png" id="icon-mp" alt="Mapa Mundial" />
+          </div>
+        </nav>
+      </div>
+     <!-- Nuevo contenedor para todo el contenido de la derecha -->
+  <div class="contenedor-derecha">
+    <!-- Contenido superior -->
+    <div class="contenido-sp">
+      <div class="contenido ct1">
+        <span id="sp-1"> Boeing 787 </span>
+        <span id="sp-2">$548</span>
+        <img src="img/icon-airfly.png" id="icon-AP" alt="Boeing 787" />
+      </div>
+      <div class="contenido">
+        <span id="sp-1"> Airbus 811 </span>
+        <span id="sp-2">$620</span>
+        <img src="img/icon-AP.png" id="icon-avion" alt="Airbus 811" />
+      </div>
+      <div class="contenido">
+        <span id="sp-1"> Total flights </span>
+        <span id="sp-2">850</span>
+        <img src="img/icon-map.png" id="icon-map" alt="Total Flights" />
+      </div>
+    </div>
+
+    <!-- Contenido central (ahora en fila) -->
+    <div class="contenido-ct">
+      <div class="contenido-c">
+        <div class="contenido-cs wh">
+          <span id="tSpan"> Last Trips </span>
+          <span id="oSpan">Overview of latest month</span>
+          <div class="headB">
+              <span id="oSpan">Members</span>
+              <span id="oSpan">Flights</span>
+              <span id="oSpan">Total Members</span>
+              <span id="oSpan">Ticket Price</span>
+          </div>
+        </div>
+        <div class="contenido-cc wh">
+          <div class="members">
+            <img src="img/member-1.png" class="miembros" alt="Avatar 1" />
+            <span id="sp-m"> John Doe </span>
+            <span id="sp-em"> johndoe@gmail.com</span>
+          </div>
+          <div class="flights">
+            <span> Qatar </span>
+            </div>
+          <div class="total-members">
+            <span> 5 </span>
+          </div>
+          <div class="ticket-price">
+            <span> $56k </span>
+            </div>
+        </div>
+        <div class="contenido-ci wh">
+           <div class="members">
+            <img src="img/member-2.png" class="miembros" alt="Avatar 1" />
+            <span id="sp-m"> Martin Loiness </span>
+            <span id="sp-em"> martin_loi@gmail.com</span>
+          </div>
+          <div class="flights">
+            <span> Emirates </span>
+            </div>
+          <div class="total-members">
+            <span> 2 </span>
+          </div>
+          <div class="ticket-price">
+            <span> $56k </span>
+            </div>
+        </div>
+      </div>
+      <div class="contenido-g">
+         <canvas id="myGraficaB"></canvas>
+      </div>
+    </div>
+    <!-- Contenido inferior -->
+    <div class="contenido-in">
+      <div class="contenido-id">
+        <canvas id="myGraficaD"></canvas>
+      </div>
+      <div class="contenido-il">
+        <canvas id="myGraficaE"></canvas>
+      </div>
+  </div>
+  </main>
+  </body>
+   <!-- Apartados de scripts -->
+    <!-- Script de las ventas en meses Estadisticas -->
+  <script>
+   let miCanvas=document.getElementById("myGraficaB").getContext("2d");
+
+   var myChart=new Chart(miCanvas,{
+    type:'bar', // Tipo de grafica
+    data:{
+        labels:['Jan','Feb','Mar','Apr','May', 'Jun'],
+        datasets:[{
+            label:'Statistics',
+            data:[3.5,6.5,4.5,6,5.5,7],
+            backgroundColor:[
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)'
+            ],
+            borderColor:[
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth:1
+        }]
+    },
+    options:{
+        responsive:true,
+        maintainAspectRatio:false
+    }
+   });
+  </script>
+    <!-- Script de los vuelos compartidos -->
+  <script>
+    let miCanvasD=document.getElementById("myGraficaD").getContext("2d");
+    
+     const centerText = {
+    id: 'centerText',
+    afterDraw(chart, args, options) {
+      const { ctx, chartArea: { width, height } } = chart;
+      ctx.save();
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = '#4A4A4A';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Flight Share', width / 2, height / 2);
+      ctx.restore();
+    }
+  };
+
+    var myChartD=new Chart(miCanvasD,{
+      type:'doughnut', 
+      data:{
+          labels:['Viva Aerobus','Volaris','Aeroméxico','American Airlines'],
+          datasets:[{
+              label:'Flights Shared',
+              data:[30,25,15, 40],
+              backgroundColor:[
+                   "#D6A900",// dorado
+                   "#00A8A8", // verde claro
+                    "#4690b2", // azul
+                   "#0F5F5F" // verde oscuro
+              ],
+              borderWidth:0,
+          }]
+      },
+      options:{
+          cutout: "60%",
+          plugins:{
+              legend:{
+                  display:false
+              }
+          },
+          title: {
+          display: true,
+          text: "Flights Share",
+          align: "start",
+          font: {
+            size: 16,
+            weight: "bold"
+          },
+          color: "#1A3E3E"
+        },
+        tooltip: {
+          enabled: true
+        }
+      },
+      plugins: [centerText]
+      
+    });
+  </script>
+  <!-- Script de esquemas de vuelos -->
+   <script>
+    let miCanvasE=document.getElementById("myGraficaE").getContext("2d");
+    <!-- Crear gradientes -->
+    const gradient1 = miCanvasE.createLinearGradient(0, 0, 0, 300);
+    gradient1.addColorStop(0, "rgba(15, 95, 95, 0.3)");
+    gradient1.addColorStop(1, "rgba(15, 95, 95, 0)");
+    
+    const gradient2 = miCanvasE.createLinearGradient(0, 0, 0, 300);
+    gradient2.addColorStop(0, "rgba(214, 169, 0, 0.3)");
+    gradient2.addColorStop(1, "rgba(214, 169, 0, 0)");
+
+    var myChartE=new Chart(miCanvasE,{
+      type: "line",
+    data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      datasets: [
+        {
+          label: "Flight A",
+          data: [3, 2, 3.5, 2.5, 6, 4],
+          fill: true,
+          backgroundColor: gradient2,
+          borderColor: "#D6A900", // dorado
+          borderWidth: 2,
+          pointBackgroundColor: "#D6A900",
+          tension: 0.4
+        },
+        {
+          label: "Flight B",
+          data: [2, 3, 2.8, 3.2, 2, 3.5],
+          fill: true,
+          backgroundColor: gradient1,
+          borderColor: "#0F5F5F", // verde oscuro
+          borderWidth: 2,
+          pointBackgroundColor: "#0F5F5F",
+          tension: 0.4
+        }
+      ]
+    },
+      options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: "Flights Schedule",
+          align: "start",
+          font: {
+            size: 16,
+            weight: "bold"
+          },
+          color: "#1A3E3E"
+        },
+        tooltip: {
+          backgroundColor: "#1A3E3E",
+          titleAlign: "center",
+          bodyAlign: "center",
+          titleColor: "#fff",
+          bodyColor: "#fff",
+          displayColors: false,
+          callbacks: {
+            label: function(context) {
+              return `${context.formattedValue} Passengers`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          },
+          grid: {
+            color: "rgba(0,0,0,0.05)"
+          }
+        }
+      }
+    }
+  });
+   </script>
+</html>
+
